@@ -1,0 +1,17 @@
+<h4>Controller</h4>
+{{code-snippet name='controller-example.js'}}
+<h4>Template</h4>
+{{code-snippet name='template-example.hbs'}}
+<h4>Environment Configuration</h4>
+{{code-snippet name='environment-example.js'}}
+{{!-- BEGIN-SNIPPET template-example --}}
+{{#if onlineStatus.isCheckingConnection}}
+  <div class='alert alert-info'>Checking connection...</div>
+{{else}}
+  {{#if onlineStatus.isOnline}}
+    <div class='alert alert-success'>Online</div>
+  {{else}}
+    <div class='alert alert-danger'>Offline</div>
+  {{/if}}
+{{/if}}
+{{!-- END-SNIPPET --}}
