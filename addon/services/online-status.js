@@ -1,8 +1,9 @@
 import Ember from 'ember';
 import _isOnline from 'npm:is-online';
+import config from 'ember-get-config';
 
 export default Ember.Service.extend({
-  config: Ember.inject.service(),
+  config,
   isOnline: false,
   isCheckingConnection: true,
   timeout: Ember.computed.alias('config.onlineStatus.timeout'),
