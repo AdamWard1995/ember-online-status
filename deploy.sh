@@ -1,13 +1,17 @@
 #!/bin/bash
 function bump {
+  echo "Configuring git..."
+  git config user.name "Travis CI"
+  git config user.email "adam.ward@carleton.ca"
+  git remote rm origin
+  git remote add origin https://AdamWard1995:$GH_TOKEN@github.com/AdamWard1995/ember-online-status.git
+
   echo "Bumping version..."
-  STATUS="$(git status)"
-  echo "Status: $1"
   VERSION="$(npm version $1 --force -m 'Bump to version %s')"
+  COMMIT="$(git log -1)"
+  echo "Git commit: $COMMIT"
   if git rev-parse "$VERSION" >/dev/null 2>&1; then
     echo "Pushing version changes..."
-    git remote rm origin
-    git remote add origin https://AdamWard1995:$GH_TOKEN@github.com/AdamWard1995/ember-online-status.git
     git push origin master
 
     echo "Creating new release..."
