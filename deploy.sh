@@ -1,7 +1,9 @@
 #!/bin/bash
 function bump {
   echo "Bumping version..."
-  VERSION="$(npm version $1 -m 'Bump to version %s')"
+  STATUS="$(git status)"
+  echo "Status: $1"
+  VERSION="$(npm version $1 --force -m 'Bump to version %s')"
   if git rev-parse "$VERSION" >/dev/null 2>&1; then
     echo "Pushing version changes..."
     git remote rm origin
