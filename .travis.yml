@@ -30,6 +30,10 @@ stages:
     # only want to deploy if master build
     if: branch = master
 
+branches:
+  only:
+    - master
+
 before_install:
   - npm config set spin false
 
