@@ -13,15 +13,15 @@ function bump {
 }
 
 if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
-  if [ $TRAVIS_COMMIT_MESSAGE == *"[ci patch]"* ]; then
+  if [[ $TRAVIS_COMMIT_MESSAGE == *"[ci patch]"* ]]; then
     npm version patch
     bump
   fi
-  if [ $TRAVIS_COMMIT_MESSAGE == *"[ci minor]"* ]; then
+  if [[ $TRAVIS_COMMIT_MESSAGE == *"[ci minor]"* ]]; then
     npm version minor
     bump
   fi
-  if [ $TRAVIS_COMMIT_MESSAGE == *"[ci major]"* ]; then
+  if [[ $TRAVIS_COMMIT_MESSAGE == *"[ci major]"* ]]; then
     npm version major
     bump
   fi
