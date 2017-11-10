@@ -1,7 +1,7 @@
 #!/bin/bash
 function bump {
   echo "Bumping version..."
-  VERSION=$(npm version $1 -m "Bump to version %s")
+  VERSION="$(npm version $1 -m 'Bump to version %s')"
   if git rev-parse "$VERSION" >/dev/null 2>&1; then
     echo "Pushing version changes..."
     git remote rm origin
@@ -22,17 +22,17 @@ if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then
   echo "Starting deployment process..."
   if [[ $TRAVIS_COMMIT_MESSAGE == *"[ci patch]"* ]]; then
     echo "Running patch release..."
-    bump patch
+    bump "patch"
     exit 1
   fi
   if [[ $TRAVIS_COMMIT_MESSAGE == *"[ci minor]"* ]]; then
     echo "Running minor release..."
-    bump minor
+    bump "minor"
     exit 1
   fi
   if [[ $TRAVIS_COMMIT_MESSAGE == *"[ci major]"* ]]; then
     echo "Running major release..."
-    bump major
+    bump "major"
     exit 1
   fi
 fi
