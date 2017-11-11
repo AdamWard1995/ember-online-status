@@ -12,7 +12,7 @@ function bump {
   echo "Git commit: $COMMIT"
 
   echo "Pushing version changes..."
-  git push && git push --tags
+  git push origin HEAD:master --force
 
   echo "Creating new release..."
   API_JSON=$(printf '{"tag_name": "%s","target_commitish": "master","name": "%s","body": "Release of version %s","draft": false,"prerelease": false}' $VERSION $VERSION $VERSION)
