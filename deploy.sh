@@ -3,9 +3,8 @@ function bump {
   echo "Configuring git..."
   git config user.name "Travis CI"
   git config user.email "adam.ward@carleton.ca"
-  git remote rm origin
-  git remote add origin https://AdamWard1995:$GH_TOKEN@github.com/AdamWard1995/ember-online-status.git
-  git reset --hard HEAD
+  git config credential.helper "store --file=.git/credentials"
+  echo "https://${GH_TOKEN}:@github.com" > .git/credentials
 
   echo "Bumping version..."
   VERSION="$(npm version $1 --force -m 'Bump to version %s')"
@@ -13,7 +12,7 @@ function bump {
   echo "Git commit: $COMMIT"
 
   echo "Pushing version changes..."
-  git push origin master
+  git push && git push --tags
 
   echo "Creating new release..."
   API_JSON=$(printf '{"tag_name": "%s","target_commitish": "master","name": "%s","body": "Release of version %s","draft": false,"prerelease": false}' $VERSION $VERSION $VERSION)
@@ -25,7 +24,7 @@ function bump {
   exit 0
 }
 
-if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_NODE_VERSION" != "6.11.0" ] && [ "$EMBER_TRY_SCENARIO" != "ember-default" ]; then
+if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_NODE_VERSION" = "6.11.0" ] && [ "$EMBER_TRY_SCENARIO" != "ember-default" ]; then
   echo "Starting deployment process..."
   if [[ $TRAVIS_COMMIT_MESSAGE == *"[ci patch]"* ]]; then
     echo "Running patch release..."
